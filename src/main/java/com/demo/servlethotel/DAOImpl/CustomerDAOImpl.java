@@ -12,6 +12,9 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
     Connection conn = DBConnection.getConnection();
 
+    public CustomerDAOImpl() throws SQLException {
+    }
+
     @Override
     public void addCustomer(Customer customer) {
         String sql = "INSERT INTO users (full_name, email, password_hash, phone_number, role) VALUES (?, ?, ?, ?, ?)";
