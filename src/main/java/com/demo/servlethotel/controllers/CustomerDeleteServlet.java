@@ -8,11 +8,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class CustomerDeleteServlet extends HttpServlet {
     private CustomerService customerService;
 
-    public CustomerDeleteServlet() {
+    public CustomerDeleteServlet() throws SQLException {
         this.customerService = new CustomerServiceImpl();
     }
 

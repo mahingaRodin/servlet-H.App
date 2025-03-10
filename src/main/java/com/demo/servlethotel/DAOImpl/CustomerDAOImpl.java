@@ -29,6 +29,8 @@ public class CustomerDAOImpl implements CustomerDAO {
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new customer was inserted successfully!");
+            } else {
+                System.out.println("User already exists!");
             }
         } catch (SQLException e) {
             e.printStackTrace();

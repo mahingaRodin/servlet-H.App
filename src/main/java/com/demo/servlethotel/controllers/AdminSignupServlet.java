@@ -24,19 +24,47 @@ public class AdminSignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username = request.getParameter("username");
+        // Retrieve form parameters
+        String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
 
-        String hashedPassword = hashPassword(password);
+        // Validate input parameters
+        if (fullName == null || fullName.isEmpty() ||
+                email == null || email.isEmpty() ||
+                password == null || password.isEmpty() ||
+                confirmPassword == null || confirmPassword.isEmpty()) {
+            request.setAttribute("errorMessage", "All fields are required!");
+            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+            return;
+        }
 
-        User admin = new User(0, username, hashedPassword, email, "admin");
+        // Check if passwords match
+        if (!password.equals(confirmPassword)) {
+            request.setAttribute("errorMessage", "Passwords do not match!");
+            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+            return;
+        }
 
-        userService.registerAdmin(admin);
-        response.sendRedirect(request.getContextPath()+"/admin/login");
-    }
+        // Hash the password
+        String hashedPassword = PasswordUtil.hashPassword(password);
 
-    private String hashPassword(String password) {
-        return PasswordUtil.hashPassword(password);
+        // Create a new User object
+        User admin = new User();
+        admin.setFullName(fullName);
+        admin.setEmail(email);
+        admin.setPassword(hashedPassword);
+        admin.setRole("admin");
+
+        try {
+            // Register the admin user
+            userService.registerAdmin(admin);
+            response.sendRedirect(request.getContextPath() + "/admin/login?success=Admin registered successfully");
+        } catch (RuntimeException e) {
+            // Handle registration failure
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+        }
     }
 }
