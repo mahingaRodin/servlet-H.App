@@ -10,13 +10,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class CustomerUpdateServlet extends HttpServlet {
     private CustomerService customerService;  // Use CustomerService
 
     @Override
     public void init() throws ServletException {
-        customerService = new CustomerServiceImpl();  // Initialize the CustomerService
+        try {
+            customerService = new CustomerServiceImpl();  // Initialize the CustomerService
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Do Get for Displaying Customer Details
@@ -36,7 +41,7 @@ public class CustomerUpdateServlet extends HttpServlet {
     // List all customers
     private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("customers", customerService.getAllCustomers());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/list.jsp");  // JSP page for customer list
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/list");  // JSP page for customer list
         dispatcher.forward(request, response);
     }
 

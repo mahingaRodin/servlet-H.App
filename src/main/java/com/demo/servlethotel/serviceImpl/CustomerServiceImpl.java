@@ -5,12 +5,13 @@ import com.demo.servlethotel.DAOImpl.CustomerDAOImpl;
 import com.demo.servlethotel.models.Customer;
 import com.demo.servlethotel.services.CustomerService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
     private CustomerDAO customerDAO;
 
-    public CustomerServiceImpl() {
+    public CustomerServiceImpl() throws SQLException {
         this.customerDAO = new CustomerDAOImpl();
     }
 
