@@ -4,5 +4,5 @@ import com.demo.servlethotel.models.User;
 
 public interface UserDAO {
     void addAdmin(User admin);
-    User getAdminByUsernameAndPassword(String username, String password);
+    User getAdminByUsernameAndPassword(String fullName, String password);
 }

@@ -6,23 +6,27 @@ public class User {
     private int userId;
     private String fullName;
     private String email;
-    private String passwordHash;
+    private String password;
     private String phoneNumber;
     private String role;
     private Timestamp createdAt;
 
     // Constructor
-    public User(int userId, String fullName, String email, String passwordHash, String phoneNumber, String role, Timestamp createdAt) {
+    public User(int userId, String fullName, String email, String password, String phoneNumber, String role, Timestamp createdAt) {
         this.userId = userId;
         this.fullName = fullName;
         this.email = email;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.createdAt = createdAt;
     }
 
-    public User(int id, String dbUsername, String storedHashedPassword, String email, String role) {
+    public User(int id, String dbUsername, String storedPassword, String email, String role) {
+    }
+
+    public User() {
+
     }
 
     // Getters and Setters
@@ -50,12 +54,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhoneNumber() {

@@ -10,11 +10,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerAdmin(User admin) {
-        userDAO.addAdmin(admin);
+       userDAO.addAdmin(admin);
     }
 
     @Override
-    public User loginAdmin(String username, String password) {
-        return userDAO.getAdminByUsernameAndPassword(username, password);
-    }
+    public User loginAdmin(String fullName, String password) {
+       return userDAO.getAdminByUsernameAndPassword(fullName, password);
+}
 }
