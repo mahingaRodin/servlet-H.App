@@ -9,10 +9,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerListServlet extends HttpServlet {
     private CustomerService customerService = new CustomerServiceImpl();
+
+    public CustomerListServlet() throws SQLException {
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
