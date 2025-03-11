@@ -31,8 +31,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public boolean updateCustomer(Customer customer) {
         customerDAO.updateCustomer(customer);
+        return false;
     }
 
     @Override
