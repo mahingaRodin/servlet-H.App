@@ -5,7 +5,7 @@
          version="6.0">
 
     <welcome-file-list>
-        <welcome-file>adminSignup.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -53,12 +53,15 @@
         <url-pattern>/admin/logout</url-pattern>
     </servlet-mapping>
 
+    <!-- Servlet for handling both edit and update functionality -->
+    <!-- Servlet for handling both edit and update functionality -->
     <servlet>
         <servlet-name>CustomerUpdateServlet</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.CustomerUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CustomerUpdateServlet</servlet-name>
+        <url-pattern>/customer/edit</url-pattern>
         <url-pattern>/customer/update</url-pattern>
     </servlet-mapping>
 
@@ -79,7 +82,5 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/customer/logout</url-pattern>
     </servlet-mapping>
-
-
 
 </web-app>

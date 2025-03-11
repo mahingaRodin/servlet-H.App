@@ -13,81 +13,76 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class CustomerUpdateServlet extends HttpServlet {
-    private CustomerService customerService;  // Use CustomerService
+    private CustomerService customerService;
 
     @Override
     public void init() throws ServletException {
         try {
-            customerService = new CustomerServiceImpl();  // Initialize the CustomerService
+            // Initialize the CustomerService
+            customerService = new CustomerServiceImpl();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to initialize CustomerService", e);
         }
     }
 
-    // Do Get for Displaying Customer Details
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
+        // Handle GET requests (display the edit form)
+        try {
+            // Retrieve the customer ID from the request
+            int customerId = Integer.parseInt(request.getParameter("id"));
 
-        if ("delete".equals(action)) {
-            deleteCustomer(request, response);
-        } else if ("edit".equals(action)) {
-            editCustomer(request, response);
-        } else {
-            listCustomers(request, response);
+            // Fetch the customer details from the database
+            Customer customer = customerService.getCustomerById(customerId);
+
+            if (customer != null) {
+                // Set the customer in the request attribute
+                request.setAttribute("customer", customer);
+
+                // Forward to the edit page (customerEdit.jsp)
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/customerEdit.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                // Customer not found: redirect to customer list
+                response.sendRedirect(request.getContextPath() + "/customer/list");
+            }
+        } catch (NumberFormatException e) {
+            // Invalid customer ID: redirect to customer list
+            response.sendRedirect(request.getContextPath() + "/customer/list");
         }
     }
 
-    // List all customers
-    private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("customers", customerService.getAllCustomers());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/list");  // JSP page for customer list
-        dispatcher.forward(request, response);
-    }
-
-    // Delete a customer
-    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int customerId = Integer.parseInt(request.getParameter("id"));
-        customerService.deleteCustomer(customerId);
-        response.sendRedirect(request.getContextPath() + "/customer/list");  // Redirect to customer list after deletion
-    }
-
-    // Edit a customer
-    private void editCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int customerId = Integer.parseInt(request.getParameter("id"));
-        Customer customer = customerService.getCustomerById(customerId);
-        request.setAttribute("customer", customer);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/edit.jsp");  // JSP page for editing customer details
-        dispatcher.forward(request, response);
-    }
-
-    // Do Post for handling customer update form submission
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
+        try {
+            // Retrieve form data
+            String idParam = request.getParameter("id");
+            String fullName = request.getParameter("fullName");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String role = request.getParameter("role");
 
-        if ("update".equals(action)) {
-            updateCustomer(request, response);
-        }
-    }
+            // Log the received parameters
+            System.out.println("Received parameters: id=" + idParam + ", fullName=" + fullName +
+                    ", email=" + email + ", phoneNumber=" + phoneNumber + ", role=" + role);
 
-    // Update customer information
-    private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String role = request.getParameter("role");
+            int id = (idParam != null && !idParam.isEmpty()) ? Integer.parseInt(idParam) : 0;
+            Customer customer = new Customer(id, fullName, email, phoneNumber, role);
 
-        Customer customer = new Customer(id, fullName, email, phoneNumber, role);
+            // Log the Customer object
+            System.out.println("Customer object: " + customer.toString());
 
-        customerService.updateCustomer(customer);  // Call the update method from CustomerService
+            boolean success = customerService.updateCustomer(customer);
 
-        // If it's an AJAX request, respond with success; otherwise, redirect to the customer list
-        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-            response.setStatus(HttpServletResponse.SC_OK);  // Respond with success for AJAX requests
-        } else {
-            response.sendRedirect(request.getContextPath() + "/customer/list");  // Redirect to customer list after update
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/customer/list");
+            } else {
+                request.setAttribute("errorMessage", "Failed to update customer. Please try again.");
+                doGet(request, response);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid ID format: " + request.getParameter("id"));
+            response.sendRedirect(request.getContextPath() + "/customer/list");
         }
     }
 }
