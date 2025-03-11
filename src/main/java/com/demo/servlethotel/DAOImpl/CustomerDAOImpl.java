@@ -94,25 +94,33 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public boolean updateCustomer(Customer customer) {
         String sql = "UPDATE users SET full_name = ?, email = ?, password_hash = ?, phone_number = ? WHERE user_id = ? AND role = 'customer'";
-
-        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-            preparedStatement.setString(1, customer.getFullName());
-            preparedStatement.setString(2, customer.getEmail());
-            preparedStatement.setString(3, customer.getPasswordHash());
-            preparedStatement.setString(4, customer.getPhoneNumber());
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            System.out.println("Updating customer: " + customer.toString());
+            preparedStatement.setString(1, customer.getFullName() != null ? customer.getFullName() : "");
+            preparedStatement.setString(2, customer.getEmail() != null ? customer.getEmail() : "");
+            preparedStatement.setString(3, customer.getPasswordHash() != null ? customer.getPasswordHash() : "");
+            preparedStatement.setString(4, customer.getPhoneNumber() != null ? customer.getPhoneNumber() : "");
             preparedStatement.setInt(5, customer.getUserId());
-
+            System.out.println("Executing SQL: " + preparedStatement.toString());
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Customer details updated successfully!");
+                System.out.println("Customer details updated successfully! Rows affected: " + rowsUpdated);
+                return true;
+            } else {
+                System.out.println("Failed to update customer: No rows affected. Check user_id=" + customer.getUserId() + " and role='customer'");
+                return false;
             }
         } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            System.err.println("SQL State: " + e.getSQLState());
+            System.err.println("Error Code: " + e.getErrorCode());
             e.printStackTrace();
+            return false;
         }
     }
-
 
     @Override
     public void deleteCustomer(int id) {
