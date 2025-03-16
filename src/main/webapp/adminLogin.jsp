@@ -213,7 +213,7 @@
 
         <!-- Navigation Links -->
         <div class="signup-link">
-            <p><%= bundle.getString("login.button") %> <a href="<%= request.getContextPath() %>/admin/signup"><%= bundle.getString("login.button") %></a></p>
+            <p><a href="adminSignup.jsp">Sign Up</a></p>
         </div>
     </div>
 </div>
