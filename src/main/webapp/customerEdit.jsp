@@ -14,6 +14,7 @@
     Customer customer = (Customer) request.getAttribute("customer");
     if (customer == null) {
         response.sendRedirect(request.getContextPath() + "/customer/list");
+        System.out.println("Error: Customer object is null!");
         return;
     }
 %>
@@ -86,6 +87,10 @@
             font-size: 0.9rem;
         }
 
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
         .content {
             padding: 30px;
         }
@@ -101,7 +106,7 @@
             color: #555;
         }
 
-        input, select {
+        input {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -110,7 +115,7 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, select:focus {
+        input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
@@ -128,7 +133,6 @@
             font-size: 16px;
             font-weight: 500;
             transition: background-color 0.3s;
-            text-align: center;
         }
 
         .btn:hover {
@@ -165,16 +169,9 @@
             .container {
                 border-radius: 0;
             }
-
-        {
-            .container {
-                border-radius: 0;
-            }
-
             .content {
                 padding: 20px;
             }
-
             .back-btn {
                 font-size: 0.8rem;
             }
@@ -185,44 +182,40 @@
 <div class="container">
     <div class="header">
         <a href="<%= request.getContextPath() %>/customer/list" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back
+            <i class="fas fa-arrow-left"></i> Back to List
         </a>
         <h2>Edit Customer</h2>
     </div>
-
     <div class="content">
-        <!-- Form to edit customer details -->
         <form action="<%= request.getContextPath() %>/customer/update" method="POST">
-            <!-- Hidden field to store the customer ID -->
             <input type="hidden" name="id" value="<%= customer.getUserId() %>">
 
             <div class="form-group">
                 <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" name="fullName" value="<%= customer.getFullName() %>" required>
+                <input type="text" id="fullName" name="fullName"
+                       value="<%= customer.getFullName() != null ? customer.getFullName() : "" %>" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<%= customer.getEmail() %>" required>
+                <input type="email" id="email" name="email"
+                       value="<%= customer.getEmail() != null ? customer.getEmail() : "" %>" required>
             </div>
 
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" value="<%= customer.getPhoneNumber() %>" required>
+                <input type="tel" id="phoneNumber" name="phoneNumber"
+                       value="<%= customer.getPhoneNumber() != null ? customer.getPhoneNumber() : "" %>" required>
             </div>
 
-            <div class="form-group">
-                <label for="role">Role</label>
-                <select id="role" name="role" required>
-                    <option value="customer" <%= "customer".equals(customer.getRole()) ? "selected" : "" %>>Customer</option>
-                    <option value="admin" <%= "admin".equals(customer.getRole()) ? "selected" : "" %>>Admin</option>
-                </select>
-            </div>
+            <input type="hidden" name="role"
+                   value="<%= customer.getRole() != null ? customer.getRole() : "customer" %>">
+            <input type="hidden" name="passwordHash"
+                   value="<%= customer.getPasswordHash() != null ? customer.getPasswordHash() : "" %>">
 
             <button type="submit" class="btn">Update Customer</button>
         </form>
 
-        <!-- Display error message if there is one -->
         <%
             String errorMessage = (String) request.getAttribute("errorMessage");
             if (errorMessage != null) {
@@ -232,10 +225,9 @@
             }
         %>
     </div>
-
     <div class="footer">
         <a href="<%= request.getContextPath() %>/customer/list">
-            <i class="fas fa-list"></i> Back to Customer List
+            <i class="fas fa-list"></i> View All Customers
         </a>
     </div>
 </div>
