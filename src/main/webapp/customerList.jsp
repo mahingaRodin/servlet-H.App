@@ -266,10 +266,10 @@
                     <td><%= customer.getPhoneNumber() %></td>
                     <td><span class="role-badge"><%= customer.getRole() %></span></td>
                     <td class="actions">
-                        <!-- Action buttons to edit or delete a customer -->
-                        <a href="<%= request.getContextPath() %>/customer/update?id=<%= customer.getUserId() %>" class="action-btn edit-btn">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+<%--                        <!-- Action buttons to edit or delete a customer -->--%>
+<%--                        <a href="<%= request.getContextPath() %>/customer/update?id=<%= customer.getUserId() %>" class="action-btn edit-btn">--%>
+<%--                            <i class="fas fa-edit"></i> Edit--%>
+<%--                        </a>--%>
                         <a href="<%= request.getContextPath() %>/customer/delete?id=<%= customer.getUserId() %>"
                            onclick="return confirm('Are you sure you want to delete this customer?');"
                            class="action-btn delete-btn">
