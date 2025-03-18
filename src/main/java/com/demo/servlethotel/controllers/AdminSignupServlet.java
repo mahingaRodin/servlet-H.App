@@ -17,7 +17,8 @@ public class AdminSignupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+        // Forward to the admin signup page (JSP file in WEB-INF/views)
+        request.getRequestDispatcher("/WEB-INF/views/adminSignup.jsp").forward(request, response);
     }
 
     @Override
@@ -36,14 +37,14 @@ public class AdminSignupServlet extends HttpServlet {
                 password == null || password.isEmpty() ||
                 confirmPassword == null || confirmPassword.isEmpty()) {
             request.setAttribute("errorMessage", "All fields are required!");
-            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/adminSignup.jsp").forward(request, response);
             return;
         }
 
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
             request.setAttribute("errorMessage", "Passwords do not match!");
-            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/adminSignup.jsp").forward(request, response);
             return;
         }
 
@@ -64,7 +65,7 @@ public class AdminSignupServlet extends HttpServlet {
         } catch (RuntimeException e) {
             // Handle registration failure
             request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("/adminSignup.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/adminSignup.jsp").forward(request, response);
         }
     }
 }
