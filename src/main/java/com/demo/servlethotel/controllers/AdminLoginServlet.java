@@ -16,8 +16,8 @@ public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Forward to the admin login page (JSP file in WEB-INF/views)
-        request.getRequestDispatcher("/WEB-INF/views/adminLogin.jsp").forward(request, response);
+        // Forward to the admin login page
+        request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
     }
 
     @Override
@@ -48,5 +48,6 @@ public class AdminLoginServlet extends HttpServlet {
         } else {
             response.sendRedirect(request.getContextPath() + "/admin/login?error=Invalid credentials");
         }
+
     }
 }

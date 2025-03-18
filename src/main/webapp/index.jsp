@@ -114,8 +114,8 @@
         <h1>Welcome to Our Hotel Booking System</h1>
         <p>Experience luxury and comfort with our premium hotel booking service. Find the perfect accommodation for your next adventure.</p>
         <div class="buttons">
-            <a href="WEB-INF/views/adminLogin.jsp" class="button">Login</a>
-            <a href="WEB-INF/views/adminSignup.jsp" class="button outline">Register</a>
+            <a href="adminLogin.jsp" class="button">Login</a>
+            <a href="adminSignup.jsp" class="button outline">Register</a>
         </div>
     </div>
 </section>

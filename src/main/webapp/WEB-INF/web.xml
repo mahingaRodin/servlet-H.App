@@ -8,7 +8,6 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Servlet for Customer List -->
     <servlet>
         <servlet-name>CustomerListServlet</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.CustomerListServlet</servlet-class>
@@ -18,7 +17,6 @@
         <url-pattern>/customer/list</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Customer Add -->
     <servlet>
         <servlet-name>CustomerController</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.CustomerController</servlet-class>
@@ -28,47 +26,35 @@
         <url-pattern>/customer/add</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Admin Signup -->
     <servlet>
-        <servlet-name>AdminSignupServlet</servlet-name>
+        <servlet-name>SignUp</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.AdminSignupServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AdminSignupServlet</servlet-name>
+        <servlet-name>SignUp</servlet-name>
         <url-pattern>/admin/signup</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Admin Login -->
     <servlet>
-        <servlet-name>AdminLoginServlet</servlet-name>
+        <servlet-name>Login</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.AdminLoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AdminLoginServlet</servlet-name>
+        <servlet-name>Login</servlet-name>
         <url-pattern>/admin/login</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Admin Logout -->
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-name>Logout</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-name>Logout</servlet-name>
         <url-pattern>/admin/logout</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Customer Login -->
-    <servlet>
-        <servlet-name>CustomerLoginServlet</servlet-name>
-        <servlet-class>com.demo.servlethotel.controllers.AdminLoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CustomerLoginServlet</servlet-name>
-        <url-pattern>/customer/login</url-pattern>
-    </servlet-mapping>
-
-    <!-- Servlet for Customer Update -->
+    <!-- Servlet for handling both edit and update functionality -->
+    <!-- Servlet for handling both edit and update functionality -->
     <servlet>
         <servlet-name>CustomerUpdateServlet</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.CustomerUpdateServlet</servlet-class>
@@ -79,7 +65,6 @@
         <url-pattern>/customer/update</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Customer Delete -->
     <servlet>
         <servlet-name>DeleteCustomerServlet</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.CustomerDeleteServlet</servlet-class>
@@ -89,13 +74,12 @@
         <url-pattern>/customer/delete</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet for Customer Logout -->
     <servlet>
-        <servlet-name>CustomerLogoutServlet</servlet-name>
+        <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>com.demo.servlethotel.controllers.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CustomerLogoutServlet</servlet-name>
+        <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/customer/logout</url-pattern>
     </servlet-mapping>
 
