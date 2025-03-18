@@ -213,7 +213,7 @@
 
         <!-- Navigation Links -->
         <div class="signup-link">
-            <p><a href="adminSignup.jsp">Sign Up</a></p>
+            <p><a href="<%= request.getContextPath() %>/admin/signup">Sign Up</a></p>
         </div>
     </div>
 </div>
